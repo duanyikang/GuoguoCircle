@@ -1,0 +1,15 @@
+
+<resources>
+
+  <style name="AppTheme" parent="MyTheme"></style>
+
+  <!-- 蓝色为主色调 -->
+  <style name="MyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--选中状态icon的颜色和字体颜色-->
+    <item name="colorPrimary">#FF9900</item>
+    <item name="colorPrimaryDark">#FF9900</item>
+    <item name="colorAccent">#FF9900</item>
+    <!--正常状态下字体颜色和icon颜色-->
+    <item name="android:textColorPrimary">@color/main_white</item>
+  </style>
+</resources>

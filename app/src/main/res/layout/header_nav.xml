@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:background="@mipmap/ic_user_background"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+  <com.guoguoquan.guoguonews.View.ui.view.RoundedImageView
+      android:id="@+id/id_header_face"
+      android:layout_width="70dp"
+      android:layout_height="70dp"
+      android:scaleType="fitXY"
+      android:src="@mipmap/default_avatar"
+      android:layout_marginTop="5dp"
+      />
+
+  <TextView
+      android:id="@+id/id_header_authorname"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/header_user_name"
+      android:textColor="@android:color/white"
+      android:textSize="25sp"
+      android:layout_marginTop="5dp"
+      />
+
+  <TextView
+      android:id="@+id/id_header_url"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/header_user_introduction"
+      android:textColor="@android:color/white"
+      android:textSize="18sp"
+      android:layout_marginTop="5dp"
+      />
+</LinearLayout>
