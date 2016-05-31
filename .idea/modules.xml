@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GuoguoNews.iml" filepath="$PROJECT_DIR$/GuoguoNews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GuoguoCircle.iml" filepath="$PROJECT_DIR$/GuoguoCircle.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
