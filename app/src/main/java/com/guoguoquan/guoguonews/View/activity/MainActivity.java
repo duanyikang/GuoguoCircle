@@ -19,11 +19,9 @@ import com.guoguoquan.guoguonews.Presenter.utils.SnackbarUtil;
 import com.guoguoquan.guoguonews.R;
 import com.guoguoquan.guoguonews.View.adapter.MyViewPagerAdapter;
 import com.guoguoquan.guoguonews.View.fragment.BaseFragment;
-import com.guoguoquan.guoguonews.View.fragment.CircleFragment;
-import com.guoguoquan.guoguonews.View.fragment.FunImageFragment;
-import com.guoguoquan.guoguonews.View.fragment.JokeFragment;
-import com.guoguoquan.guoguonews.View.fragment.SubmitFragment;
-import com.guoguoquan.guoguonews.View.fragment.VideoFragment;
+import com.guoguoquan.guoguonews.View.fragment.ThreeFragment;
+import com.guoguoquan.guoguonews.View.fragment.TwoFragment;
+import com.guoguoquan.guoguonews.View.fragment.OneFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,16 +60,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void initData() {
         mTitles = getResources().getStringArray(R.array.tab_titles);
         mFragments = new ArrayList<>();
-        mFragments.add(0, new JokeFragment());
-        mFragments.add(1, new FunImageFragment());
-        mFragments.add(2, new VideoFragment());
-        mFragments.add(3, new CircleFragment());
-        mFragments.add(4, new SubmitFragment());
+        mFragments.add(0, new OneFragment());
+        mFragments.add(1, new TwoFragment());
+        mFragments.add(2, new ThreeFragment());
     }
 
     private void configViews() {
 
-        // 设置显示Toolbar
         setSupportActionBar(mToolbar);
 
         // 设置Drawerlayout开关指示器，即Toolbar最左边的那个icon
@@ -167,9 +162,8 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         }
     }
 
-    public void setCurrentPage(int i)
-    {
+    public void setCurrentPage(int i) {
         mViewPager.setCurrentItem(i);
-        ((BaseFragment)mViewPagerAdapter.getItem(i)).onRefresh();
+        ((BaseFragment) mViewPagerAdapter.getItem(i)).onRefresh();
     }
 }

@@ -1,5 +1,6 @@
 package com.guoguoquan.guoguonews.View.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,8 @@ public class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     public static final int SPAN_COUNT = 2;
 
+    protected Context mContext;
+
 
     public SparseArray<NewsBean> mDatas = new SparseArray<>();
 
@@ -39,6 +42,7 @@ public class BaseFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_base_layout, container, false);
         initView();
+        mContext=getActivity();
         return mView;
     }
 

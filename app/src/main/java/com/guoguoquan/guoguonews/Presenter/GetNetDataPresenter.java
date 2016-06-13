@@ -14,20 +14,23 @@ import com.guoguoquan.guoguonews.Bean.NewsBean;
 
 public class GetNetDataPresenter {
     public static GetNetDataPresenter mGetNetDataPresenter = null;
-    private IViewGetNetData mIViewGetNetData;
+
+    public static ImplGetNetDataWatcher implGetNetDataWatcher=new ImplGetNetDataWatcher();
     private GetNewsBeanManager mGetNewsBeanManager;
 
-    private GetNetDataPresenter(IViewGetNetData mIViewGetNetData) {
-        this.mIViewGetNetData = mIViewGetNetData;
+    private GetNetDataPresenter() {
+
         this.mGetNewsBeanManager = GetNewsBeanManager.getInstance();
     }
 
-    public static GetNetDataPresenter getInstance(IViewGetNetData mIViewGetNetData)
+    public static GetNetDataPresenter getInstance(IViewGetNetData mIViewGetNetData,int type)
     {
         if(mGetNetDataPresenter==null)
         {
-            mGetNetDataPresenter=new GetNetDataPresenter(mIViewGetNetData);
+            mGetNetDataPresenter=new GetNetDataPresenter();
         }
+
+        implGetNetDataWatcher.addWatcher(mIViewGetNetData,type);
         return mGetNetDataPresenter;
     }
 
@@ -35,13 +38,14 @@ public class GetNetDataPresenter {
 
         mGetNewsBeanManager.getNewsBean(type, key, value, new GetNewsBeanManager.GetNetDataListener() {
             @Override
-            public void onSuccess(SparseArray<NewsBean> mDatas) {
-                mIViewGetNetData.showSuccess(mDatas);
+            public void onSuccess(SparseArray<NewsBean> mDatas,int type) {
+                implGetNetDataWatcher.notifyshowSuccess(mDatas,type);
+
             }
 
             @Override
-            public void onFailed(String message) {
-                mIViewGetNetData.showFailed(message);
+            public void onFailed(String message,int type) {
+                implGetNetDataWatcher.notifyshowFailed(message,type);
             }
         });
     }

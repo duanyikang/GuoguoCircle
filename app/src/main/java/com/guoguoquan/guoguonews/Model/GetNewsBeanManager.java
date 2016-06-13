@@ -31,9 +31,9 @@ public class GetNewsBeanManager {
 
     public interface GetNetDataListener {
 
-        void onSuccess(SparseArray<NewsBean> mDatas);
+        void onSuccess(SparseArray<NewsBean> mDatas,int type);
 
-        void onFailed(String message);
+        void onFailed(String message,int type);
     }
 
     public static GetNewsBeanManager getInstance() {
@@ -63,13 +63,13 @@ public class GetNewsBeanManager {
             public void onSuccess(Object obj) {
                 switch (type) {
                     case URL_TYPE_HOME:
-                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveHomeList(obj.toString()));
+                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveHomeList(obj.toString()),URL_TYPE_HOME);
                         break;
                     case URL_TYPE_IMAGE:
-                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveImageList(obj.toString()));
+                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveImageList(obj.toString()),URL_TYPE_IMAGE);
                         break;
                     case URL_TYPE_CIRCLE:
-                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveCircleList(obj.toString()));
+                        mGetNetDataListener.onSuccess(JsonResolveManager.getInstance().ResolveCircleList(obj.toString()),URL_TYPE_CIRCLE);
                         break;
                 }
 
@@ -77,7 +77,7 @@ public class GetNewsBeanManager {
 
             @Override
             public void onFail(Object obj) {
-                mGetNetDataListener.onFailed(obj.toString());
+                mGetNetDataListener.onFailed(obj.toString(),type);
             }
         });
     }

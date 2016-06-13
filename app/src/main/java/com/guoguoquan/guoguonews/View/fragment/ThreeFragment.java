@@ -1,26 +1,26 @@
 package com.guoguoquan.guoguonews.View.fragment;
 
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.SparseArray;
 
 import com.guoguoquan.guoguonews.Presenter.GetNetDataPresenter;
 import com.guoguoquan.guoguonews.View.IViewGetNetData;
-import com.guoguoquan.guoguonews.View.adapter.MyRecyclerViewAdapter;
+import com.guoguoquan.guoguonews.View.adapter.MyStaggeredViewAdapter;
 import com.guoguoquan.guoguonews.Bean.NewsBean;
 
 /**
  * @author 小段果果
- * @time 2016/5/25  10:16
+ * @time 2016/5/25  11:05
  * @E-mail duanyikang@mumayi.com
  */
 
-public class FunImageFragment extends BaseFragment implements IViewGetNetData {
+public class ThreeFragment extends BaseFragment implements IViewGetNetData{
     @Override
     public void initView() {
         super.initView();
-        GetNetDataPresenter.getInstance(this).go(2, new String[]{"size", "page"}, new String[]{"100", "1"});
-
+        GetNetDataPresenter.getInstance(this,3).go(3, new String[]{"size", "page"}, new String[]{"100", "1"});
     }
+
 
     @Override
     public void showLoading() {
@@ -34,9 +34,9 @@ public class FunImageFragment extends BaseFragment implements IViewGetNetData {
 
     @Override
     public void showSuccess(SparseArray<NewsBean> mDatas) {
-        mLayoutManager = new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(), mDatas);
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        mStaggeredAdapter = new MyStaggeredViewAdapter(getActivity(),mDatas);
+        mRecyclerView.setAdapter(mStaggeredAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
