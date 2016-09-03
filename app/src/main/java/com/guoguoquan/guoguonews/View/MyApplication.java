@@ -14,6 +14,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+		//facebook图片加载初始化
         Fresco.initialize(this);
     }
 }
