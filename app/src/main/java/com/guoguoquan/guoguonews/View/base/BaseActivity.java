@@ -1,89 +1,130 @@
 package com.guoguoquan.guoguonews.View.base;
 
-import android.app.Activity;
+
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.util.TypedValue;
+import android.view.MenuItem;
 
-import com.guoguoquan.guoguonews.Presenter.BasePresenter;
+
+import com.guoguoquan.guoguonews.Presenter.base.BasePresenter;
 import com.guoguoquan.guoguonews.R;
 
 import butterknife.ButterKnife;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+
 
 /**
  * 作者：duanyikang on 2016/9/9 0009 15:47
  * 邮箱：duanyikang@yixia.com
  */
-public abstract class BaseActivity<P extends BasePresenter>  extends AppCompatActivity {
-
-
-    protected P presenter;
-    public Activity mActivity;
-    private CompositeSubscription mCompositeSubscription;
-
+public abstract class BaseActivity<V, T extends BasePresenter> extends AppCompatActivity {
+    protected T mPresenter;
+    protected AppBarLayout mAppBarLayout;
+    protected Toolbar mToolbar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private boolean mIsRequestDataRefresh = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter=createPresenter();
-    }
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
+        if (createPresenter() != null) {
+            mPresenter = createPresenter();
+            mPresenter.attachView((V) this);
+        }
+
+        setContentView(provideContentViewId());
         ButterKnife.bind(this);
-        mActivity = this;
+
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mAppBarLayout != null && mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            if (canBack()) {
+                ActionBar mActionBar = getSupportActionBar();
+                if (mActionBar != null)
+                    mActionBar.setDisplayHomeAsUpEnabled(true);
+            }
+            if (Build.VERSION.SDK_INT >= 21) {
+                mAppBarLayout.setElevation(10.6f);
+            }
+        }
+
+
+        if (isSetRefresh()) {
+            setupSwipeRefresh();
+        }
     }
 
-    @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        ButterKnife.bind(this);
-        mActivity = this;
+    private void setupSwipeRefresh() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3);
+            mSwipeRefreshLayout.setProgressViewOffset(true, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+            mSwipeRefreshLayout.setOnRefreshListener(this::requestDataRefresh);
+        }
+
     }
 
-    protected abstract P createPresenter();
-
-
-
+    public void setRefresh(boolean requestDataRefresh) {
+        if (mSwipeRefreshLayout == null) {
+            return;
+        }
+        if (!requestDataRefresh) {
+            mIsRequestDataRefresh = false;
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mSwipeRefreshLayout != null) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            }, 1000);
+        } else {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onUnsubscribe();
-        if (presenter!=null)
-            presenter.detachView();
-
-    }
-
-
-    private void onUnsubscribe() {
-        if (mCompositeSubscription != null) {
-            mCompositeSubscription.unsubscribe();
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 
-    public void addSubscription(Subscription subscription) {
-        mCompositeSubscription = new CompositeSubscription();
-        mCompositeSubscription.add(subscription);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void requestDataRefresh() {
+        mIsRequestDataRefresh = true;
+    }
+
+    private boolean isSetRefresh() {
+        return false;
     }
 
 
-
-    public void toastShow(int resId) {
-        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
+    private boolean canBack() {
+        return false;
     }
 
-    public void toastShow(String resId) {
-        Toast.makeText(mActivity, resId, Toast.LENGTH_SHORT).show();
-    }
+    protected abstract int provideContentViewId();
+
+    protected abstract T createPresenter();
+
+
 }
