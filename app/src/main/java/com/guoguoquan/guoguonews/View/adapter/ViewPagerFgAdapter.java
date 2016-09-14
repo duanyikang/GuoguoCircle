@@ -26,7 +26,6 @@ public class ViewPagerFgAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         return fragmentList.get(position);
     }
 
@@ -49,11 +48,11 @@ public class ViewPagerFgAdapter extends FragmentPagerAdapter {
         if (tag.equals("main_view_pager")) {
             switch (position) {
                 case 0:
-                    return "段子";
+                    return "JOKE";
                 case 1:
-                    return "新闻";
+                    return "NEWS";
                 case 2:
-                    return "天气";
+                    return "WETHER";
             }
         }
         return null;
