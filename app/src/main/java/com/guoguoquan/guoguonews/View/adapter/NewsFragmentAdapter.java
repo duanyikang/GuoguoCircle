@@ -2,6 +2,7 @@ package com.guoguoquan.guoguonews.View.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context mContext;
     private List<NewsBean> NewsList;
+    private String TAG=getClass().getName();
 
     public NewsFragmentAdapter(Context mContext, List<NewsBean> mList) {
         this.mContext = mContext;
@@ -36,6 +38,8 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NewsViewHolder mHolder = (NewsViewHolder) holder;
         mHolder.bindItem(NewsList.get(position));
+        mHolder.rootView.setOnClickListener(v -> Log.i(TAG,NewsList.get(position).getArticle_url()));
+        mHolder.tv_news_title.setOnClickListener(v -> Log.i(TAG+"Œ“ «title",NewsList.get(position).getArticle_url()));
     }
 
     @Override
@@ -46,12 +50,13 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView tv_news_title;
         ImageView iv_news_img;
+        View rootView;
 
         public NewsViewHolder(View rootView) {
             super(rootView);
             tv_news_title = (TextView) rootView.findViewById(R.id.tv_news_title);
             iv_news_img = (ImageView) rootView.findViewById(R.id.iv_news_img);
-
+            this.rootView=rootView;
         }
 
         public void bindItem(NewsBean bean) {
