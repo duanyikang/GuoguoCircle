@@ -10,14 +10,14 @@ public class ApiFactory {
 
     protected static final Object monitor = new Object();
 
-    static JokeApi jokeApiSingleton = null;
+    static NetApi netApiSingleton = null;
 
-    public static JokeApi getJokeApiSingleton() {
+    public static NetApi getNetApiSingleton() {
         synchronized (monitor) {
-            if (jokeApiSingleton == null) {
-                jokeApiSingleton = new ApiRetrofit().getJokeApiService();
+            if (netApiSingleton == null) {
+                netApiSingleton = new ApiRetrofit().getNetApiService();
             }
-            return jokeApiSingleton;
+            return netApiSingleton;
         }
     }
 }

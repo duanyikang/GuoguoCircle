@@ -23,7 +23,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     protected T mPresenter;
 
     private boolean mIsRequestDatafresh = false;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -54,6 +54,22 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
             mSwipeRefreshLayout.setProgressViewOffset(true, 0, (int) TypedValue
                     .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
             mSwipeRefreshLayout.setOnRefreshListener(this::requestDataRefresh);
+        }
+    }
+
+    public void setRefresh(boolean requestDataRefresh) {
+        if (mSwipeRefreshLayout == null) {
+            return;
+        }
+        if (!requestDataRefresh) {
+            mIsRequestDatafresh = false;
+            mSwipeRefreshLayout.postDelayed(() -> {
+                if (mSwipeRefreshLayout != null) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            }, 1000);
+        } else {
+            mSwipeRefreshLayout.setRefreshing(true);
         }
     }
 

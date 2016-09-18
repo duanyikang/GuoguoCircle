@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
     private void initTabView() {
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new JokeFragment());
-        mFragmentList.add(new JokeFragment());
+        mFragmentList.add(new NewsFragment());
         mFragmentList.add(new JokeFragment());
 
         mViewPager.setOffscreenPageLimit(3);

@@ -46,7 +46,7 @@ public class JokeFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    class JokeViewHolder extends RecyclerView.ViewHolder {
+    static class JokeViewHolder extends RecyclerView.ViewHolder {
 
         SimpleDraweeView iv_user_avatar;
         TextView tv_user_name;
@@ -62,7 +62,7 @@ public class JokeFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void bindItem(JokeBean jokeBean) {
-            iv_user_avatar.setImageURI(Uri.parse("http://7xopn5.com1.z0.glb.clouddn.com/头像.jpg"));
+            iv_user_avatar.setImageURI(Uri.parse("http://img1.imgtn.bdimg.com/it/u=367740859,2357929488&fm=21&gp=0.jpg"));
             tv_user_name.setText(jokeBean.getAuthor());
             tv_item_content.setText(jokeBean.getContent());
             if (jokeBean.getPicurl() != null) {

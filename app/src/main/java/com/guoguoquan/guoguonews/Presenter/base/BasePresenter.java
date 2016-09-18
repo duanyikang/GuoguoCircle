@@ -3,7 +3,7 @@ package com.guoguoquan.guoguonews.Presenter.base;
 import android.widget.Toast;
 
 import com.guoguoquan.guoguonews.Model.http.ApiFactory;
-import com.guoguoquan.guoguonews.Model.http.JokeApi;
+import com.guoguoquan.guoguonews.Model.http.NetApi;
 import com.guoguoquan.guoguonews.MyApplication;
 
 import java.lang.ref.Reference;
@@ -16,7 +16,8 @@ import java.lang.ref.WeakReference;
 public abstract class BasePresenter<V> {
     protected Reference<V> mViewRef;
 
-    public static final JokeApi jokeApi = ApiFactory.getJokeApiSingleton();
+    public static final NetApi netApi = ApiFactory.getNetApiSingleton();
+
 
     public void attachView(V view) {
         mViewRef = new WeakReference<V>(view);
@@ -40,5 +41,6 @@ public abstract class BasePresenter<V> {
     public void loadError(Throwable throwable) {
         throwable.printStackTrace();
         Toast.makeText(MyApplication.context, throwable.toString(), Toast.LENGTH_LONG).show();
+
     }
 }

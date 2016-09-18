@@ -26,8 +26,7 @@ import butterknife.BindView;
 
 public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresenter> implements InterJokeFragmentView {
 
-    private LinearLayoutManager mLinearLayoutManager;
-    @BindView(R.id.content_list)
+    LinearLayoutManager mLinearLayoutManager;
     RecyclerView mRecyclerView;
 
 
@@ -36,6 +35,7 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
         super.onActivityCreated(savedInstanceState);
         setDataRefresh(true);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
+        setDataRefresh(true);
         mPresenter.getJokeData(100, 0);
     }
 
@@ -59,7 +59,7 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
 
     @Override
     public void setDataRefresh(Boolean b) {
-
+        setRefresh(b);
     }
 
     @Override

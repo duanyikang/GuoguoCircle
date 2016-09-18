@@ -37,11 +37,12 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
     }
 
     public void getJokeData(int size, int page) {
+
         mInterOneFragmentView = getView();
         if (mInterOneFragmentView != null) {
             mRecyclerView = mInterOneFragmentView.getRecyclerView();
             mLinearLayoutManager = mInterOneFragmentView.getLayoutManager();
-            jokeApi.getJokeList(String.valueOf(size), String.valueOf(page))
+            netApi.getJokeList(String.valueOf(size), String.valueOf(page))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(jokeServiceBean -> {
@@ -56,6 +57,7 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
             mJokeFragmentAdapter = new JokeFragmentAdapter(context, jokeList);
             mRecyclerView.setAdapter(mJokeFragmentAdapter);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            mInterOneFragmentView.setDataRefresh(false);
         }
     }
 

@@ -22,12 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiRetrofit {
 
-    public JokeApi JokeApiService;
+    public NetApi netApiService;
 
     public static final String Base_Url = "http://api.1-blog.com/biz/bizserver/";
 
-    public JokeApi getJokeApiService() {
-        return JokeApiService;
+    public NetApi getNetApiService() {
+        return netApiService;
     }
 
     public ApiRetrofit() {
@@ -49,7 +49,7 @@ public class ApiRetrofit {
 
 
 
-        JokeApiService=retrofit_joke.create(JokeApi.class);
+        netApiService=retrofit_joke.create(NetApi.class);
 
     }
     Interceptor REWRITE_CACHE_CONTROL_INTERCEPTOR = chain -> {
