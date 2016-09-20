@@ -33,6 +33,7 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private JokeFragmentAdapter mJokeFragmentAdapter = new JokeFragmentAdapter(context);
+    private boolean isFirstSet = true;
 
 
     public JokePresenter(Context context) {
@@ -55,11 +56,22 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
 
     private void disPlayAdapter(List<JokeBean> jokeList, boolean isadd) {
         if (mInterOneFragmentView != null) {
-            mJokeFragmentAdapter.addAll(jokeList);
-            mJokeFragmentAdapter.setCanLoading(true);
-            mRecyclerView.setAdapter(mJokeFragmentAdapter);
-            mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            if (isFirstSet) {
+                mRecyclerView.setAdapter(mJokeFragmentAdapter);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+                isFirstSet=false;
+            }
+
+            if (isadd) {
+                mJokeFragmentAdapter.clear();
+                mJokeFragmentAdapter.addAll(jokeList);
+            } else {
+                mJokeFragmentAdapter.addAll(jokeList);
+            }
+            mJokeFragmentAdapter.notifyDataSetChanged();
             mInterOneFragmentView.setDataRefresh(false);
+
         }
     }
 

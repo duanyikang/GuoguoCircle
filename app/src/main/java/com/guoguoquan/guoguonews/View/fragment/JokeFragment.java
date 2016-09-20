@@ -18,14 +18,13 @@ import com.guoguoquan.guoguonews.View.listener.OnLoadMoreListener;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 
-
 /**
  * @author 小段果果
  * @time 2016/5/24  20:12
  * @E-mail duanyikang@mumayi.com
  */
 
-public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresenter> implements InterJokeFragmentView{
+public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresenter> implements InterJokeFragmentView {
 
     LinearLayoutManager mLinearLayoutManager;
     RecyclerView mRecyclerView;
@@ -36,10 +35,10 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setDataRefresh(true);
+
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         setDataRefresh(true);
-        mPresenter.getJokeData(3, page,false);
+        mPresenter.getJokeData(3, page, true);
     }
 
 
@@ -68,7 +67,13 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
 
     @Override
     public void requestDataRefresh(SwipyRefreshLayoutDirection direction) {
-        mPresenter.getJokeData(3, ++page,false);
+        if (direction.equals(SwipyRefreshLayoutDirection.TOP)) {
+            //顶部刷新需要清空原来的队列
+            mPresenter.getJokeData(3, ++page, true);
+        } else {
+            mPresenter.getJokeData(3, ++page, false);
+        }
+
     }
 
     @Override
