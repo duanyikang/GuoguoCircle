@@ -9,7 +9,9 @@ import com.guoguoquan.guoguonews.Bean.JokeServiceBean;
 import com.guoguoquan.guoguonews.Presenter.base.BasePresenter;
 import com.guoguoquan.guoguonews.View.adapter.JokeFragmentAdapter;
 import com.guoguoquan.guoguonews.View.iview.InterJokeFragmentView;
+import com.guoguoquan.guoguonews.View.listener.OnLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
@@ -27,17 +29,17 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
 
     private Context context;
     private InterJokeFragmentView mInterOneFragmentView;
+
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private JokeFragmentAdapter mJokeFragmentAdapter;
+    private JokeFragmentAdapter mJokeFragmentAdapter = new JokeFragmentAdapter(context);
 
 
     public JokePresenter(Context context) {
         this.context = context;
     }
 
-    public void getJokeData(int size, int page) {
-
+    public void getJokeData(int size, int page, boolean isadd) {
         mInterOneFragmentView = getView();
         if (mInterOneFragmentView != null) {
             mRecyclerView = mInterOneFragmentView.getRecyclerView();
@@ -46,15 +48,15 @@ public class JokePresenter extends BasePresenter<InterJokeFragmentView> {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(jokeServiceBean -> {
-                        disPlayAdapter(jokeServiceBean.getDetail());
+                        disPlayAdapter(jokeServiceBean.getDetail(), isadd);
                     }, this::loadError);
-
         }
     }
 
-    private void disPlayAdapter(List<JokeBean> jokeList) {
+    private void disPlayAdapter(List<JokeBean> jokeList, boolean isadd) {
         if (mInterOneFragmentView != null) {
-            mJokeFragmentAdapter = new JokeFragmentAdapter(context, jokeList);
+            mJokeFragmentAdapter.addAll(jokeList);
+            mJokeFragmentAdapter.setCanLoading(true);
             mRecyclerView.setAdapter(mJokeFragmentAdapter);
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
             mInterOneFragmentView.setDataRefresh(false);

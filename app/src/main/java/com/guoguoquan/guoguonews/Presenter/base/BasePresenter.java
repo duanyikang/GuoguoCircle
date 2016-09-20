@@ -14,6 +14,8 @@ import java.lang.ref.WeakReference;
  * 邮箱：duanyikang@yixia.com
  */
 public abstract class BasePresenter<V> {
+
+
     protected Reference<V> mViewRef;
 
     public static final NetApi netApi = ApiFactory.getNetApiSingleton();

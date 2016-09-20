@@ -11,40 +11,28 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoguoquan.guoguonews.Bean.JokeBean;
 import com.guoguoquan.guoguonews.R;
 
-import java.util.List;
-
-
 /**
- * ä½œè€…ï¼šduanyikang on 2016/9/14 0014 11:12
- * é‚®ç®±ï¼šduanyikang@yixia.com
+ * ×÷Õß£ºduanyikang on 2016/9/20 0020 10:38
+ * ÓÊÏä£ºduanyikang@yixia.com
  */
-public class JokeFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class JokeFragmentAdapter extends AutoLoadAdapter<JokeBean, JokeFragmentAdapter.JokeViewHolder> {
 
     private Context mContext;
-    private List<JokeBean> jokeList;
 
-    public JokeFragmentAdapter(Context context, List<JokeBean> jokeList) {
-        this.mContext = context;
-        this.jokeList = jokeList;
+    public JokeFragmentAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = View.inflate(parent.getContext(), R.layout.layout_joke_normal_item, null);
-        return new JokeViewHolder(rootView);
+    public JokeFragmentAdapter.JokeViewHolder onCreateViewHolder(ViewGroup parent) {
+        View v = View.inflate(parent.getContext(), R.layout.layout_joke_normal_item, null);
+        return new JokeViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        JokeViewHolder mHolder = (JokeViewHolder) holder;
-        mHolder.bindItem(jokeList.get(position));
+    public void onBindItemViewHolder(JokeFragmentAdapter.JokeViewHolder holder, int position) {
+        holder.bindItem(getItem(position));
     }
-
-    @Override
-    public int getItemCount() {
-        return jokeList.size();
-    }
-
 
     static class JokeViewHolder extends RecyclerView.ViewHolder {
 
@@ -74,5 +62,4 @@ public class JokeFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         }
     }
-
 }

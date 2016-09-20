@@ -1,6 +1,7 @@
 package com.guoguoquan.guoguonews.View.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.guoguoquan.guoguonews.Bean.NewsBean;
 import com.guoguoquan.guoguonews.R;
+import com.guoguoquan.guoguonews.View.activity.WebActivity;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Context mContext;
     private List<NewsBean> NewsList;
-    private String TAG=getClass().getName();
+    private String TAG = getClass().getName();
 
     public NewsFragmentAdapter(Context mContext, List<NewsBean> mList) {
         this.mContext = mContext;
@@ -38,8 +40,15 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NewsViewHolder mHolder = (NewsViewHolder) holder;
         mHolder.bindItem(NewsList.get(position));
-        mHolder.rootView.setOnClickListener(v -> Log.i(TAG,NewsList.get(position).getArticle_url()));
-        mHolder.tv_news_title.setOnClickListener(v -> Log.i(TAG+"ÎÒÊÇtitle",NewsList.get(position).getArticle_url()));
+        mHolder.rootView.setOnClickListener(v -> Log.i(TAG, NewsList.get(position).getArticle_url()));
+        mHolder.tv_news_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, WebActivity.class);
+                intent.putExtra("url", NewsList.get(position).getArticle_url());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,7 +65,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(rootView);
             tv_news_title = (TextView) rootView.findViewById(R.id.tv_news_title);
             iv_news_img = (ImageView) rootView.findViewById(R.id.iv_news_img);
-            this.rootView=rootView;
+            this.rootView = rootView;
         }
 
         public void bindItem(NewsBean bean) {

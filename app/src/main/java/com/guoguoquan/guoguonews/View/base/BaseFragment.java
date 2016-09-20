@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.guoguoquan.guoguonews.Presenter.base.BasePresenter;
 import com.guoguoquan.guoguonews.R;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 
 import butterknife.ButterKnife;
@@ -23,7 +25,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     protected T mPresenter;
 
     private boolean mIsRequestDatafresh = false;
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SwipyRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -47,13 +49,10 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
     }
 
     private void setUpSwipeRefresh(View view) {
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        mSwipeRefreshLayout = (SwipyRefreshLayout) view.findViewById(R.id.swipe_refresh);
         if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1,
-                    R.color.refresh_progress_2, R.color.refresh_progress_3);
-            mSwipeRefreshLayout.setProgressViewOffset(true, 0, (int) TypedValue
-                    .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-            mSwipeRefreshLayout.setOnRefreshListener(this::requestDataRefresh);
+            mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1, R.color.refresh_progress_2, R.color.refresh_progress_3);
+            mSwipeRefreshLayout.setOnRefreshListener(direction -> requestDataRefresh(direction));
         }
     }
 
@@ -73,9 +72,7 @@ public abstract class BaseFragment<V, T extends BasePresenter<V>> extends Fragme
         }
     }
 
-    public void requestDataRefresh() {
-        mIsRequestDatafresh = true;
-    }
+    public abstract void requestDataRefresh(SwipyRefreshLayoutDirection direction);
 
     protected void initView(View rootView) {
     }

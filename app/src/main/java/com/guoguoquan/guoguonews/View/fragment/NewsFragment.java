@@ -11,6 +11,7 @@ import com.guoguoquan.guoguonews.Presenter.base.BasePresenter;
 import com.guoguoquan.guoguonews.R;
 import com.guoguoquan.guoguonews.View.base.BaseFragment;
 import com.guoguoquan.guoguonews.View.iview.InterNewsFragmentView;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 /**
  * ×÷Õß£ºduanyikang on 2016/9/14 0014 15:25
@@ -30,7 +31,6 @@ public class NewsFragment extends BaseFragment<InterNewsFragmentView, NewsPresen
         setDataRefresh(true);
         mPresenter.getNewsData(String.valueOf(100));
     }
-
 
     @Override
     protected void initView(View rootView) {
@@ -52,6 +52,11 @@ public class NewsFragment extends BaseFragment<InterNewsFragmentView, NewsPresen
     @Override
     public void setDataRefresh(Boolean b) {
         setRefresh(b);
+    }
+
+    @Override
+    public void requestDataRefresh(SwipyRefreshLayoutDirection direction) {
+
     }
 
     @Override

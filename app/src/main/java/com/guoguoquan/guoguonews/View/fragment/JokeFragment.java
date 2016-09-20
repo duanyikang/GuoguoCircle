@@ -14,8 +14,9 @@ import com.guoguoquan.guoguonews.Presenter.JokePresenter;
 import com.guoguoquan.guoguonews.R;
 import com.guoguoquan.guoguonews.View.base.BaseFragment;
 import com.guoguoquan.guoguonews.View.iview.InterJokeFragmentView;
+import com.guoguoquan.guoguonews.View.listener.OnLoadMoreListener;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
-import butterknife.BindView;
 
 
 /**
@@ -24,10 +25,12 @@ import butterknife.BindView;
  * @E-mail duanyikang@mumayi.com
  */
 
-public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresenter> implements InterJokeFragmentView {
+public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresenter> implements InterJokeFragmentView{
 
     LinearLayoutManager mLinearLayoutManager;
     RecyclerView mRecyclerView;
+
+    private int page = 0;
 
 
     @Override
@@ -36,8 +39,9 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
         setDataRefresh(true);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         setDataRefresh(true);
-        mPresenter.getJokeData(100, 0);
+        mPresenter.getJokeData(3, page,false);
     }
+
 
     @Override
     protected void initView(View rootView) {
@@ -63,6 +67,11 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
     }
 
     @Override
+    public void requestDataRefresh(SwipyRefreshLayoutDirection direction) {
+        mPresenter.getJokeData(3, ++page,false);
+    }
+
+    @Override
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
@@ -71,5 +80,7 @@ public class JokeFragment extends BaseFragment<InterJokeFragmentView, JokePresen
     public LinearLayoutManager getLayoutManager() {
         return mLinearLayoutManager;
     }
+
+
 }
 
